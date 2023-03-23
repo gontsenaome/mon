@@ -1,5 +1,6 @@
 #include "monty.h"
 #include <string.h>
+#include <stdlib.h>
 
 void free_tokens(void);
 unsigned int token_arr_len(void);
@@ -108,7 +109,7 @@ void (*get_op_func(char *opcode))(stack_t**, unsigned int)
  *
  * Return: EXIT_SUCCESS on success, respective error code on failure.
  */
-int run_monty(FILE *script _fd)
+int run_monty(FILE *script_fd)
 {
 	stack_t *stack = NULL;
 	char *line = NULL;
@@ -147,8 +148,8 @@ int run_monty(FILE *script _fd)
 		op_func(&stack, line_number);
 		if (token_arr_len() != prev_tok_len)
 		{
-			if (op_toks && op_toks[prev_toks_len])
-				exit_status = atoi(op_toks[prev_toks_len]);
+			if (op_toks && op_toks[prev_tok_len])
+				exit_status = atoi(op_toks[prev_tok_len]);
 			else
 				exit_status = EXIT_FAILURE;
 			free_tokens();
